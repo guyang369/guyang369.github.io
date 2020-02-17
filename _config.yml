@@ -91,3 +91,5 @@ friends: [
         description: "flyzy小站Coding Pages分部~"
     }
 ]
+
+theme: jekyll-theme-cayman
