@@ -7,6 +7,8 @@ Theme from [Jekyll Themes][1]
 
 ### 使用教程参考：[GitHub Pages免费博客 5分钟速建教程][2]
 
+注意：在settings的Repository name项，名称前缀需与用户名保持一致。
+
 ### 感谢作者Hux的设计~你们可以去star[Jekyll Themes][1]
 
 
