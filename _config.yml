@@ -2,10 +2,10 @@
 title: Guyang小站
 SEOTitle: Guyang小站 | Guyang小站，GitHub Pages分部
 header-img: img/home-bg.jpg
-email: huhao19891016@gmail.com
+email: yanggu369@gmail.com
 description: "Guyang小站GitHub分站~"
 keyword: "技术分享,科学上网,建站教程"
-url: "https://guyang.github.io"              # your host, for absolute URL
+url: "https://guyang369.github.io"              # your host, for absolute URL
 baseurl: ""         # 例如, '/blog' 如果你的博客的路径是'host/blog'，默认是空
 
 
