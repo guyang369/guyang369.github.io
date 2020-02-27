@@ -8,7 +8,7 @@ header-img: "img/post-bg-2018.jpg"
 tags:    
     - jQuery插件开发  
 ---
-转自： https://www.cnblogs.com/wayou/p/jquery_plugin_tutorial.html
+转自： [https://www.cnblogs.com/wayou/p/jquery_plugin_tutorial.html](https://www.cnblogs.com/wayou/p/jquery_plugin_tutorial.html)
 
 #### 基本格式：
 ```js
