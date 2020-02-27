@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      jQuery 插件开发（转）
-subtitle:   SSH 解除密码验证登录权限
+subtitle:   jQuery 插件开发
 date:       2020-02-28
 author:     guyang
 header-img: "img/post-bg-2018.jpg"
