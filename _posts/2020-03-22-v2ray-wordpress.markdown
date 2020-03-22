@@ -44,9 +44,9 @@ NS	elle.ns.cloudflare.com
 设置A记录：
 ```
 Type	Name	        Content	       TTL	   Proxy status	
-A       xxx.com         xx.xx.xx.xx    Auto    DNS only
-A       tls             xx.xx.xx.xx    Auto    DNS only
-A       www             xx.xx.xx.xx    Auto    DNS only
+A       xxx.com         xx.xx.xx.xx    Auto        DNS only
+A       tls             xx.xx.xx.xx    Auto        DNS only
+A       www             xx.xx.xx.xx    Auto        DNS only
 ```
 
 ### 环境安装：
