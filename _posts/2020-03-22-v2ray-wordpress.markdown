@@ -16,6 +16,41 @@ tags:
 
 ### 环境安装：
 
+#### 购买VPS
+- **1. 购买云服务器**
+
+国内的推荐[腾讯云](https://cloud.tencent.com/redirect.php?redirect=1005&cps_key=42c9b322fd48ff0ce405a0c7d78612fd)，毕竟大公司，工单服务贼及时！还送免费的CDN加速流量~
+国外的Vultr还不错，全球15个机房中心，采用小时计费策略，需要国外服务器的也可以尝试下~[Vultr购买图解步骤](https://www.flyzy2005.cn/vps/vultr-deploy)
+免费试用的话，可以选择[谷歌GCP](https://console.cloud.google.com),有mail账号就可以免费一年的服务器.
+
+- **2.购买域名**
+
+有了云服务器，还需要一个域名。国内的域名需要备案，购买的话阿里云腾讯云都可以；
+国外的[namesilo](https://www.namesilo.com)也可以试试~但是可能国外的域名DNS解析会比较慢。
+
+
+#### DNS代理
+
+在云服务器管理页面设置 DNS服务器,使用 [cloudflare](https://dash.cloudflare.com) 进行DNS代理；如下：
+
+```
+Type	Value
+NS	carter.ns.cloudflare.com
+NS	elle.ns.cloudflare.com
+```
+
+- **1. DNS解析设置**
+如域名是 xxx.com ; ip是 xx.xx.xx.xx; 
+设置A记录：
+```
+Type	Name	        Content	       TTL	   Proxy status	
+A       xxx.com         xx.xx.xx.xx    Auto    DNS only
+A       tls             xx.xx.xx.xx    Auto    DNS only
+A       www             xx.xx.xx.xx    Auto    DNS only
+```
+
+- **2.购买域名**
+
 #### 一键安装v2ray：
 ```
 wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.com/wulabing/V2Ray_ws-tls_bash_onekey/master/install.sh" && chmod +x install.sh && bash install.sh
