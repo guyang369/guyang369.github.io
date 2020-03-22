@@ -1,12 +1,15 @@
 ---
 layout:     post
 title:      一键安装v2ray
-subtitle:   一键安装v2ray + wordpress
+subtitle:   一键安装v2ray + WordPress
 date:       2020-03-22
 author:     guyang
 header-img: "img/post-bg-2018.jpg"
 tags:    
-    - v2ray,wordpress    
+    - v2ray
+    - WordPress
+    - 科学上网
+    - 一键脚本    
 ---
 
 ### 环境安装：
