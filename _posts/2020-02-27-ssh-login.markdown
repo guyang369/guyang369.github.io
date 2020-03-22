@@ -47,3 +47,29 @@ PasswordAuthentication no
 service sshd restart
 ```
 再次尝试登录服务器。
+
+
+### Linux 初始root 密码
+
+```
+sudo passwd root
+```
+
+输入用户名，密码
+
+#### 切换root用户
+
+```
+su root
+```
+
+
+#### root 用户登陆ssh
+
+```
+vi /etc/ssh/sshd_config
+
+修改：
+PermitRootLogin yes
+PasswordAuthentication yes
+```
