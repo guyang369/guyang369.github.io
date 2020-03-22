@@ -14,7 +14,7 @@ tags:
     - 一键脚本    
 ---
 
-### 环境安装：
+### 域名设置：
 
 #### 购买VPS
 - **1. 购买云服务器**
@@ -39,7 +39,7 @@ NS	carter.ns.cloudflare.com
 NS	elle.ns.cloudflare.com
 ```
 
-- **1. DNS解析设置**
+#### **DNS解析设置**
 如域名是 xxx.com ; ip是 xx.xx.xx.xx; 
 设置A记录：
 ```
@@ -49,7 +49,7 @@ A       tls             xx.xx.xx.xx    Auto    DNS only
 A       www             xx.xx.xx.xx    Auto    DNS only
 ```
 
-- **2.购买域名**
+### 环境安装：
 
 #### 一键安装v2ray：
 ```
