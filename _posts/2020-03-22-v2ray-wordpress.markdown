@@ -38,19 +38,50 @@ vi /etc/nginx/conf/conf.d/v2ray.conf
  - 添加nginx对PHP的处理，修改后的配置文件如下所示：
  
 ```
-index index.php
+ server {
+        listen 443 ssl http2;
+        ssl_certificate       /data/v2ray.crt;
+        ssl_certificate_key   /data/v2ray.key;
+        ssl_protocols         TLSv1.2 TLSv1.3;
+        ssl_ciphers           TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-128-CCM-8-SHA256:TLS13-AES-128-CCM-SHA256:EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
+        server_name www.xxx.com;
+        index index.php index.html index.htm;
+        root  /home/wwwroot/3DCEList;
+        error_page 400 = /400.html;
+        
+        location /81ab9590/
+        {
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:30993;
+        proxy_http_version 1.1;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+        }
+        
+        location /
+        {
+        	try_files $uri $uri/ /index.php?$args;
+        }
+        
+        rewrite /wp-admin$ $scheme://$host$uri/ permanent;
+        
+        location ~ \.php$ {
+        	fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+        	fastcgi_index index.php;
+        	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        	include fastcgi_params;
+        }
+ }
+ server {
+        listen 80 default;
+        server_name _;
+        server_name www.xxx.com;
+        return 301 https://www.xxx.com$request_uri;
+ }
 
-location /
-{
-	try_files $uri $uri/ /index.php?$args;
-}
-rewrite /wp-admin$ $scheme://$host$uri/ permanent;
-location ~ \.php$ {
-	fastcgi_pass unix:/run/php/php7.0-fpm.sock;
-	fastcgi_index index.php;
-	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-	include fastcgi_params;
-}
 ```
 #### 重启Nginx启动新配置文件:
 ```
