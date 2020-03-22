@@ -25,10 +25,13 @@ apt-get install php-fpm php-mysql
 ```
 #### 配置Nginx使用PHP7:
  - 修改Nginx的配置文件：
+ 
 ```
 vi /etc/nginx/conf/conf.d/v2ray.conf
 ```
+
  - 添加nginx对PHP的处理，修改后的配置文件如下所示：
+ 
 ```
 index index.php
 
