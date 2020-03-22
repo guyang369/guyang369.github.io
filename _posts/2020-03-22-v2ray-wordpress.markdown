@@ -7,6 +7,8 @@ author:     guyang
 header-img: "img/post-bg-2018.jpg"
 tags:    
     - v2ray
+    - Mysql
+    - PHP7
     - WordPress
     - 科学上网
     - 一键脚本    
