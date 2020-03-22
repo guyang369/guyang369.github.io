@@ -2,7 +2,7 @@
 layout:     post
 title:      一键安装v2ray
 subtitle:   一键安装v2ray + wordpress
-date:       2020-02-27
+date:       2020-03-22
 author:     guyang
 header-img: "img/post-bg-2018.jpg"
 tags:    
