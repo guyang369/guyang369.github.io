@@ -15,7 +15,7 @@ RSS: false
 #csdn_username: wf632856695
 #weibo_username:     flyzy2005
 #zhihu_username:     flyzy2005
-#github_username:    flyzy2005
+github_username:    guyang369
 #twitter_username:  flyzy2005
 #facebook_username:  flyzy2005
 
@@ -89,6 +89,10 @@ friends: [
         title: "flyzy小站Coding Pages",
         href: "https://flyzy2005.coding.me",
         description: "flyzy小站Coding Pages分部~"
+    },{
+          title: "Hux Blog",
+          href: "http://huangxuan.me/",
+          description: "黄玄的Blog"
     }
 ]
 
