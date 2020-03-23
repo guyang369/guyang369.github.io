@@ -2,15 +2,7 @@
   "name": "GuYang Blog",
   "short_name": "GuYang Blog",
   "description": "Never give up the faith.",
-  "icons": [{
-    "src": "icons/128.png",
-    "sizes": "128x128",
-    "type": "image/png"
-  }, {
-    "src": "icons/512.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }],
+  "version": "1.0",
   "background_color": "#fff",
   "theme_color": "#000",
   "start_url": "/",
