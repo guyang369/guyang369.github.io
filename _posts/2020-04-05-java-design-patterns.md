@@ -8,6 +8,29 @@ tags:
     - JAVA
     - 设计模式
     - Design Patterns
+    - Factory
+    - Abstract Factory
+    - Singleton
+    - Builder
+    - Prototype
+    - Adapter
+    - Decorator
+    - Proxy
+    - Facade
+    - Bridge
+    - Composite
+    - Flyweight
+    - Strategy
+    - Template
+    - Observer
+    - Iterator
+    - Chain of Responsibility
+    - Command
+    - Memento
+    - State
+    - Visitor
+    - Mediator
+    - Interpreter
 ---
 ## 设计模式（Design Patterns）
 设计模式（Design pattern）是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结。
@@ -1110,7 +1133,7 @@ public class ConnectionPool {
 ```
 通过连接池的管理，实现了数据库连接的共享，不需要每一次都重新创建连接，节省了数据库重新创建的开销，提升了系统的性能！
    
-#### 13、策略模式（strategy）
+#### 13、策略模式（Strategy）
     
 策略模式定义了一系列算法，并将每个算法封装起来，使他们可以相互替换，且算法的变化不会影响到使用算法的客户。
 需要设计一个接口，为一系列实现类提供统一的方法，多个实现类实现该接口，设计一个抽象类（可有可无，属于辅助类），提供辅助函数
