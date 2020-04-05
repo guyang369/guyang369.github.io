@@ -52,6 +52,7 @@ tags:
  - 6、合成复用原则（Composite Reuse Principle）
     
     原则是尽量使用合成/聚合的方式，而不是使用继承。
+    
 ### 三、Java的23中设计模式
     
 从这一块开始，我们详细介绍Java中23种设计模式的概念，应用场景等情况，并结合他们的特点及设计模式的原则进行分析。
@@ -68,7 +69,7 @@ tags:
             public void Send();  
         }  
     ``` 
-    其次，创建实现类：
+    - 其次，创建实现类：
     
     ```java
     public class MailSender implements Sender {  
@@ -84,9 +85,9 @@ tags:
             System.out.println("this is sms sender!");  
         }  
     }  
-    ``` 
-	
-    最后，建工厂类：    
+    ```
+ 	
+    - 最后，建工厂类：    
     ```java
     public class SendFactory {  
       
@@ -102,7 +103,7 @@ tags:
         }  
     }  
     ```
-    我们来测试下：
+    - 我们来测试下：
     ```java
     public class FactoryTest {  
       
@@ -131,7 +132,7 @@ tags:
             return new SmsSender();  
         }  
     } 
-	```	
+	```
 
     测试类如下：   
     ```java
@@ -143,7 +144,7 @@ tags:
             sender.Send();  
         }  
     } 
-	```	
+	```
     输出：this is mailsender!
     
   - 静态工厂方法模式，将上面的多个工厂方法模式里的方法置为静态的，不需要创建实例，直接调用即可。
