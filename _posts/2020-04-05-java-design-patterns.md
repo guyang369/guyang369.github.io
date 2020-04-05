@@ -69,8 +69,7 @@ tags:
             public void Send();  
         }  
     ``` 
-    - 其次，创建实现类：
-    
+    - 其次，创建实现类：    
     ```java
     public class MailSender implements Sender {  
         @Override  
@@ -120,8 +119,7 @@ tags:
   - 多个工厂方法模式
 	是对普通工厂方法模式的改进，在普通工厂方法模式中，如果传递的字符串出错，则不能正确创建对象，而多个工厂方法模式是提供多个工厂方法，分别创建对象。 
     
-    将上面的代码做下修改，改动下SendFactory类就行，如下：  
-      
+    将上面的代码做下修改，改动下SendFactory类就行，如下：        
     ```java    
 	public class SendFactory {  
        public Sender produceMail(){  
@@ -147,8 +145,7 @@ tags:
 	```
     输出：this is mailsender!
     
-  - 静态工厂方法模式，将上面的多个工厂方法模式里的方法置为静态的，不需要创建实例，直接调用即可。
-    
+  - 静态工厂方法模式，将上面的多个工厂方法模式里的方法置为静态的，不需要创建实例，直接调用即可。    
     ```java
     public class SendFactory {            
         public static Sender produceMail(){  
@@ -159,8 +156,7 @@ tags:
             return new SmsSender();  
         }  
     } 
-    public class FactoryTest {  
-      
+    public class FactoryTest {        
         public static void main(String[] args) {      
             Sender sender = SendFactory.produceMail();  
             sender.Send();  
@@ -172,6 +168,7 @@ tags:
     总体来说，工厂模式适合：凡是出现了大量的产品需要创建，并且具有共同的接口时，可以通过工厂方法模式进行创建。在以上的三种模式中，第一种如果传入的字符串有误，不能正确创建对象，第三种相对于第二种，不需要实例化工厂类，所以，大多数情况下，我们会选用第三种——静态工厂方法模式。
     
 #### 2、抽象工厂模式（Abstract Factory）
+
 工厂方法模式有一个问题就是，类的创建依赖工厂类，也就是说，如果想要拓展程序，必须对工厂类进行修改，这违背了闭包原则，
 所以，从设计角度考虑，有一定的问题，如何解决？就用到抽象工厂模式，创建多个工厂类，这样一旦需要增加新的功能，直接增加新的工厂类就可以了，不需要修改之前的代码。
 请看例子：    
@@ -181,7 +178,6 @@ tags:
     }  
 ```
 两个实现类：
-
 ```java
 public class MailSender implements Sender {  
     @Override  
@@ -199,7 +195,6 @@ public class SmsSender implements Sender {
 }  
 ```
 两个工厂类：
-
 ```java
 public class SendMailFactory implements Provider {  
       
@@ -218,7 +213,6 @@ public class SendSmsFactory implements Provider{
 }  
 ```
 在提供一个接口：
-
 ```java
 public interface Provider {  
     public Sender produce();  
@@ -226,7 +220,6 @@ public interface Provider {
 ```
 
 测试类：
-
 ```java
 public class Test {  
   
@@ -250,7 +243,6 @@ public class Test {
 3、有些类如交易所的核心交易引擎，控制着交易流程，如果该类可以创建多个的话，系统完全乱了。（比如一个军队出现了多个司令员同时指挥，肯定会乱成一团），所以只有使用单例模式，才能保证核心交易服务器独立控制整个流程。
 
 首先我们写一个简单的单例类：
-
 ```java
 public class Singleton {  
   
@@ -277,8 +269,7 @@ public class Singleton {
 ```
 这个类可以满足基本要求，但是，像这样毫无线程安全保护的类，如果我们把它放入多线程的环境下，肯定就会出现问题了，如何解决？
 我们首先会想到对getInstance方法加synchronized关键字，如下：
-
-```
+```java
 public static synchronized Singleton getInstance() {  
     if (instance == null) {  
         instance = new Singleton();  
@@ -289,8 +280,7 @@ public static synchronized Singleton getInstance() {
 
 但是，synchronized关键字锁住的是这个对象，这样的用法，在性能上会有所下降，因为每次调用getInstance()，
 都要对对象上锁，事实上，只有在第一次创建对象的时候需要加锁，之后就不需要了，所以，这个地方需要改进。我们改成下面这个：
-
-```
+```java
 public static Singleton getInstance() {  
     if (instance == null) {  
         synchronized (instance) {  
@@ -316,8 +306,7 @@ d>B进入synchronized块，由于instance此时不是null，因此它马上离�
 e>此时B线程打算使用Singleton实例，却发现它没有被初始化，于是错误发生了。
 
 所以程序还是有可能发生错误，其实程序在运行过程是很复杂的，从这点我们就可以看出，尤其是在写多线程环境下的程序更有难度，有挑战性。我们对该程序做进一步优化：
-
-```
+```java
 private static class SingletonFactory{           
     private static Singleton instance = new Singleton();           
 }           
@@ -325,8 +314,10 @@ public static Singleton getInstance(){
     return SingletonFactory.instance;           
 }   
 ```
-实际情况是，单例模式使用内部类来维护单例的实现，JVM内部的机制能够保证当一个类被加载的时候，这个类的加载过程是线程互斥的。这样当我们第一次调用getInstance的时候，JVM能够帮我们保证instance只被创建一次，并且会保证把赋值给instance的内存初始化完毕，这样我们就不用担心上面的问题。同时该方法也只会在第一次调用的时候使用互斥机制，这样就解决了低性能问题。这样我们暂时总结一个完美的单例模式：
-
+实际情况是，单例模式使用内部类来维护单例的实现，JVM内部的机制能够保证当一个类被加载的时候，这个类的加载过程是线程互斥的。
+这样当我们第一次调用getInstance的时候，JVM能够帮我们保证instance只被创建一次，并且会保证把赋值给instance的内存初始化完毕，
+这样我们就不用担心上面的问题。同时该方法也只会在第一次调用的时候使用互斥机制，这样就解决了低性能问题。
+这样我们暂时总结一个完美的单例模式：
 ```java
 public class Singleton {  
   
@@ -350,8 +341,9 @@ public class Singleton {
     }  
 } 
 ```
-其实说它完美，也不一定，如果在构造函数中抛出异常，实例将永远得不到创建，也会出错。所以说，十分完美的东西是没有的，我们只能根据实际情况，选择最适合自己应用场景的实现方法。也有人这样实现：因为我们只需要在创建类的时候进行同步，所以只要将创建和getInstance()分开，单独为创建加synchronized关键字，也是可以的：
-
+其实说它完美，也不一定，如果在构造函数中抛出异常，实例将永远得不到创建，也会出错。所以说，十分完美的东西是没有的，
+我们只能根据实际情况，选择最适合自己应用场景的实现方法。也有人这样实现：因为我们只需要在创建类的时候进行同步，
+所以只要将创建和getInstance()分开，单独为创建加synchronized关键字，也是可以的：
 ```java
 public class SingletonTest {  
   
@@ -377,7 +369,6 @@ public class SingletonTest {
 考虑性能的话，整个程序只需创建一次实例，所以性能也不会有什么影响。
 
 补充：采用"影子实例"的办法为单例对象的属性同步更新
-
 ```java
 public class SingletonTest {  
   
@@ -424,14 +415,16 @@ public class SingletonTest {
 
 再次，单例类可以被继承，他的方法可以被覆写。但是静态类内部方法都是static，无法被覆写。
 
-最后一点，单例类比较灵活，毕竟从实现上只是一个普通的Java类，只要满足单例的基本需求，你可以在里面随心所欲的实现一些其它功能，但是静态类不行。从上面这些概括中，基本可以看出二者的区别，但是，从另一方面讲，我们上面最后实现的那个单例模式，内部就是用一个静态类来实现的，所以，二者有很大的关联，只是我们考虑问题的层面不同罢了。两种思想的结合，才能造就出完美的解决方案，就像HashMap采用数组+链表来实现一样，其实生活中很多事情都是这样，单用不同的方法来处理问题，总是有优点也有缺点，最完美的方法是，结合各个方法的优点，才能最好的解决问题！
+最后一点，单例类比较灵活，毕竟从实现上只是一个普通的Java类，只要满足单例的基本需求，你可以在里面随心所欲的实现一些其它功能，但是静态类不行。
+从上面这些概括中，基本可以看出二者的区别，但是，从另一方面讲，我们上面最后实现的那个单例模式，内部就是用一个静态类来实现的，
+所以，二者有很大的关联，只是我们考虑问题的层面不同罢了。两种思想的结合，才能造就出完美的解决方案，就像HashMap采用数组+链表来实现一样，
+其实生活中很多事情都是这样，单用不同的方法来处理问题，总是有优点也有缺点，最完美的方法是，结合各个方法的优点，才能最好的解决问题！
  
 #### 4、建造者模式（Builder）
     
 工厂类模式提供的是创建单个类的模式，而建造者模式则是将各种产品集中起来进行管理，用来创建复合对象，所谓复合对象就是指某个类具有不同的属性，其实建造者模式就是前面抽象工厂模式和最后的Test结合起来得到的。我们看一下代码：
 
 还和前面一样，一个Sender接口，两个实现类MailSender和SmsSender。最后，建造者类如下：
-
 ```java
 public class Builder {  
       
@@ -451,7 +444,6 @@ public class Builder {
 } 
 ```
 测试类：
-
 ```java
 public class Test {  
   
@@ -461,12 +453,13 @@ public class Test {
     }  
 }  
 ```
-从这点看出，建造者模式将很多功能集成到一个类里，这个类可以创造出比较复杂的东西。所以与工程模式的区别就是：工厂模式关注的是创建单个产品，而建造者模式则关注创建符合对象，多个部分。因此，是选择工厂模式还是建造者模式，依实际情况而定。
+从这点看出，建造者模式将很多功能集成到一个类里，这个类可以创造出比较复杂的东西。所以与工程模式的区别就是：
+工厂模式关注的是创建单个产品，而建造者模式则关注创建符合对象，多个部分。因此，是选择工厂模式还是建造者模式，依实际情况而定。
    
 #### 5、原型模式（Prototype）
     
-原型模式虽然是创建型的模式，但是与工程模式没有关系，从名字即可看出，该模式的思想就是将一个对象作为原型，对其进行复制、克隆，产生一个和原对象类似的新对象。本小结会通过对象的复制，进行讲解。在Java中，复制对象是通过clone()实现的，先创建一个原型类：
-
+原型模式虽然是创建型的模式，但是与工程模式没有关系，从名字即可看出，该模式的思想就是将一个对象作为原型，对其进行复制、克隆，产生一个和原对象类似的新对象。
+本小结会通过对象的复制，进行讲解。在Java中，复制对象是通过clone()实现的，先创建一个原型类：
 ```java
 public class Prototype implements Cloneable {  
   
@@ -476,14 +469,16 @@ public class Prototype implements Cloneable {
     }  
 }  
 ```
-很简单，一个原型类，只需要实现Cloneable接口，覆写clone方法，此处clone方法可以改成任意的名称，因为Cloneable接口是个空接口，你可以任意定义实现类的方法名，如cloneA或者cloneB，因为此处的重点是super.clone()这句话，super.clone()调用的是Object的clone()方法，而在Object类中，clone()是native的，具体怎么实现，我会在另一篇文章中，关于解读Java中本地方法的调用，此处不再深究。在这儿，我将结合对象的浅复制和深复制来说一下，首先需要了解对象深、浅复制的概念：
+很简单，一个原型类，只需要实现Cloneable接口，覆写clone方法，此处clone方法可以改成任意的名称，因为Cloneable接口是个空接口，
+你可以任意定义实现类的方法名，如cloneA或者cloneB，因为此处的重点是super.clone()这句话，super.clone()调用的是Object的clone()方法，
+而在Object类中，clone()是native的，具体怎么实现，我会在另一篇文章中，关于解读Java中本地方法的调用，此处不再深究。
+在这儿，我将结合对象的浅复制和深复制来说一下，首先需要了解对象深、浅复制的概念：
 
 浅复制：将一个对象复制后，基本数据类型的变量都会重新创建，而引用类型，指向的还是原对象所指向的。
 
 深复制：将一个对象复制后，不论是基本数据类型还有引用类型，都是重新创建的。简单来说，就是深复制进行了完全彻底的复制，而浅复制不彻底。
 
 此处，写一个深浅复制的例子：
-
 ```java
 public class Prototype implements Cloneable, Serializable {  
   
@@ -537,9 +532,9 @@ class SerializableObject implements Serializable {
 要实现深复制，需要采用流的形式读入当前对象的二进制输入，再写出二进制数据对应的对象。
 
 #### 6、适配器模式（Adapter）
+
 将某个类的接口转换成客户端期望的另一个接口表示，目的是消除由于接口不匹配所造成的类的兼容性问题。主要分为三类：类的适配器模式、对象的适配器模式、接口的适配器模式。首先，我们来看看类的适配器模式：
 核心思想就是：有一个Source类，拥有一个方法，待适配，目标接口时Targetable，通过Adapter类，将Source的功能扩展到Targetable里，看代码：
-
 ```java
 public class Source {  
   
@@ -566,7 +561,6 @@ public class Adapter extends Source implements Targetable {
 }  
 ```
 Adapter类继承Source类，实现Targetable接口，下面是测试类：
-
 ```java
 public class AdapterTest {  
   
@@ -587,7 +581,6 @@ this is the targetable method!
 基本思路和类的适配器模式相同，只是将Adapter类作修改，这次不继承Source类，而是持有Source类的实例，以达到解决兼容性的问题。看图：
 
 只需要修改Adapter类的源码即可：
-
 ```java
 public class Wrapper implements Targetable {  
   
@@ -609,7 +602,6 @@ public class Wrapper implements Targetable {
 }  
 ```
 测试类：
-
 ```java
 public class AdapterTest {  
   
@@ -622,8 +614,12 @@ public class AdapterTest {
 } 
 ```
 输出与第一种一样，只是适配的方法不同而已。
-第三种适配器模式是接口的适配器模式，接口的适配器是这样的：有时我们写的一个接口中有多个抽象方法，当我们写该接口的实现类时，必须实现该接口的所有方法，这明显有时比较浪费，因为并不是所有的方法都是我们需要的，有时只需要某一些，此处为了解决这个问题，我们引入了接口的适配器模式，借助于一个抽象类，该抽象类实现了该接口，实现了所有的方法，而我们不和原始的接口打交道，只和该抽象类取得联系，所以我们写一个类，继承该抽象类，重写我们需要的方法就行。这个很好理解，在实际开发中，我们也常会遇到这种接口中定义了太多的方法，以致于有时我们在一些实现类中并不是都需要。看代码：
-
+第三种适配器模式是接口的适配器模式，接口的适配器是这样的：有时我们写的一个接口中有多个抽象方法，
+当我们写该接口的实现类时，必须实现该接口的所有方法，这明显有时比较浪费，因为并不是所有的方法都是我们需要的，
+有时只需要某一些，此处为了解决这个问题，我们引入了接口的适配器模式，借助于一个抽象类，该抽象类实现了该接口，
+实现了所有的方法，而我们不和原始的接口打交道，只和该抽象类取得联系，所以我们写一个类，继承该抽象类，重写我们需要的方法就行。
+这个很好理解，在实际开发中，我们也常会遇到这种接口中定义了太多的方法，以致于有时我们在一些实现类中并不是都需要。
+看代码：
 ```java
 public interface Sourceable {  
       
@@ -632,7 +628,6 @@ public interface Sourceable {
 } 
 ```
 抽象类Wrapper2：
-
 ```java
 public abstract class Wrapper2 implements Sourceable{  
       
@@ -672,7 +667,7 @@ the sourceable interface's second Sub2!
 ```
 达到了我们的效果！
 
- 讲了这么多，总结一下三种适配器模式的应用场景：
+讲了这么多，总结一下三种适配器模式的应用场景：
 
 类的适配器模式：当希望将一个类转换成满足另一个新接口的类时，可以使用类的适配器模式，创建一个新类，继承原有的类，实现新的接口即可。
 
@@ -683,8 +678,8 @@ the sourceable interface's second Sub2!
 #### 7、装饰模式（Decorator）
     
 顾名思义，装饰模式就是给一个对象增加一些新的功能，而且是动态的，要求装饰对象和被装饰对象实现同一个接口，装饰对象持有被装饰对象的实例，关系图如下：
-Source类是被装饰类，Decorator类是一个装饰类，可以为Source类动态的添加一些功能，代码如下：
-
+Source类是被装饰类，Decorator类是一个装饰类，可以为Source类动态的添加一些功能，
+代码如下：
 ```java
     public interface Sourceable {  
         public void method();  
@@ -715,7 +710,6 @@ Source类是被装饰类，Decorator类是一个装饰类，可以为Source类�
     }  
 ```
 测试类：
-
 ```java
 public class DecoratorTest {  
   
@@ -741,12 +735,12 @@ after decorator!
 
 #### 8、代理模式（Proxy）
     
-其实每个模式名称就表明了该模式的作用，代理模式就是多一个代理类出来，替原对象进行一些操作，比如我们在租房子的时候回去找中介，为什么呢？因为你对该地区房屋的信息掌握的不够全面，希望找一个更熟悉的人去帮你做，此处的代理就是这个意思。再如我们有的时候打官司，我们需要请律师，因为律师在法律方面有专长，可以替我们进行操作，表达我们的想法。先来看看关系图：
-
- 
+其实每个模式名称就表明了该模式的作用，代理模式就是多一个代理类出来，替原对象进行一些操作，
+比如我们在租房子的时候回去找中介，为什么呢？因为你对该地区房屋的信息掌握的不够全面，
+希望找一个更熟悉的人去帮你做，此处的代理就是这个意思。
+再如我们有的时候打官司，我们需要请律师，因为律师在法律方面有专长，可以替我们进行操作，表达我们的想法。 
 
 根据上文的阐述，代理模式就比较容易的理解了，我们看下代码：
-
 ```java
 public interface Sourceable {  
     public void method();  
@@ -782,7 +776,6 @@ public class Proxy implements Sourceable {
 } 
 ```
 测试类：
-
 ```java
 public class ProxyTest {  
   
@@ -811,10 +804,10 @@ after proxy!
 
 #### 9、外观模式（Facade）
     
-外观模式是为了解决类与类之家的依赖关系的，像spring一样，可以将类和类之间的关系配置到配置文件中，而外观模式就是将他们的关系放在一个Facade类中，降低了类类之间的耦合度，该模式中没有涉及到接口，看下类图：（我们以一个计算机的启动过程为例）
+外观模式是为了解决类与类之家的依赖关系的，像spring一样，可以将类和类之间的关系配置到配置文件中，
+而外观模式就是将他们的关系放在一个Facade类中，降低了类类之间的耦合度，该模式中没有涉及到接口，
 
 我们先看下实现类：
-
 ```java
 public class CPU {  
       
@@ -878,7 +871,6 @@ public class Computer {
 } 
 ```
 User类如下：
-
 ```java
 public class User {  
   
@@ -902,23 +894,25 @@ memory shutdown!
 disk shutdown!
 computer closed!
 
-如果我们没有Computer类，那么，CPU、Memory、Disk他们之间将会相互持有实例，产生关系，这样会造成严重的依赖，修改一个类，可能会带来其他类的修改，这不是我们想要看到的，有了Computer类，他们之间的关系被放在了Computer类里，这样就起到了解耦的作用，这，就是外观模式！
+如果我们没有Computer类，那么，CPU、Memory、Disk他们之间将会相互持有实例，产生关系，这样会造成严重的依赖，
+修改一个类，可能会带来其他类的修改，这不是我们想要看到的，有了Computer类，
+他们之间的关系被放在了Computer类里，这样就起到了解耦的作用，这，就是外观模式！
 
 #### 10、桥接模式（Bridge）
     
-桥接模式就是把事物和其具体实现分开，使他们可以各自独立的变化。桥接的用意是：将抽象化与实现化解耦，使得二者可以独立变化，像我们常用的JDBC桥DriverManager一样，JDBC进行连接数据库的时候，在各个数据库之间进行切换，基本不需要动太多的代码，甚至丝毫不用动，原因就是JDBC提供统一接口，每个数据库提供各自的实现，用一个叫做数据库驱动的程序来桥接就行了。
+桥接模式就是把事物和其具体实现分开，使他们可以各自独立的变化。桥接的用意是：将抽象化与实现化解耦，使得二者可以独立变化，
+像我们常用的JDBC桥DriverManager一样，JDBC进行连接数据库的时候，在各个数据库之间进行切换，基本不需要动太多的代码，
+甚至丝毫不用动，原因就是JDBC提供统一接口，每个数据库提供各自的实现，用一个叫做数据库驱动的程序来桥接就行了。
 
 实现代码：
 
 先定义接口：
-
 ```java
 public interface Sourceable {  
     public void method();  
 }  
 ```
 分别定义两个实现类：
-
 ```java
 public class SourceSub1 implements Sourceable {  
   
@@ -937,7 +931,6 @@ public class SourceSub2 implements Sourceable {
 }  
 ```
 定义一个桥，持有Sourceable的一个实例：
-
 ```java
 public abstract class Bridge {  
     private Sourceable source;  
@@ -962,7 +955,6 @@ public class MyBridge extends Bridge {
 }  
 ```
 测试类：
-
 ```java
 public class BridgeTest {  
       
@@ -995,7 +987,6 @@ this is the second sub!
 组合模式有时又叫部分-整体模式在处理类似树形结构的问题时比较方便，看看关系图：
 
 直接来看代码：
-
 ```java
 public class TreeNode {  
       
@@ -1068,7 +1059,6 @@ FlyWeightFactory负责创建和管理享元单元，当一个客户端请求时�
 看个例子：
 
 看下数据库连接池的代码：
-
 ```java
 public class ConnectionPool {  
       
@@ -1129,7 +1119,6 @@ public class ConnectionPool {
 AbstractCalculator是辅助类，提供辅助方法，接下来，依次实现下每个类：
 
 首先统一接口：
-
 ```java
 public interface ICalculator {  
     public int calculate(String exp);  
@@ -1179,7 +1168,6 @@ public class Multiply extends AbstractCalculator implements ICalculator {
 }  
 ```
 简单的测试类：
-
 ```java
 public class StrategyTest {  
   
@@ -1231,7 +1219,6 @@ public class Plus extends AbstractCalculator {
 } 
 ```
 测试类：
-
 ```java
 public class StrategyTest {  
   
@@ -1257,14 +1244,12 @@ Observer1和Observer2必然变化。AbstractSubject类中定义着需要监控�
 且当MySubject变化时，负责通知在列表内存在的对象。我们看实现代码：
 
 一个Observer接口：
-
 ```java
 public interface Observer {  
     public void update();  
 }  
 ```
 两个实现类：
-
 ```java
 public class Observer1 implements Observer {  
   
@@ -1284,7 +1269,6 @@ public class Observer2 implements Observer {
 }
 ```
 Subject接口及实现类：
-
 ```java
 public interface Subject {  
       
@@ -1334,7 +1318,6 @@ public class MySubject extends AbstractSubject {
 }  
 ```
 测试类：
-
 ```java
 public class ObserverTest {  
   
@@ -1359,14 +1342,10 @@ observer2 has received!
 
 #### 16、迭代子模式（Iterator）
     
-顾名思义，迭代器模式就是顺序访问聚集中的对象，一般来说，集合中非常常见，如果对集合类比较熟悉的话，理解本模式会十分轻松。这句话包含两层意思：一是需要遍历的对象，即聚集对象，二是迭代器对象，用于对聚集对象进行遍历访问。我们看下关系图：
-
- 
-
+顾名思义，迭代器模式就是顺序访问聚集中的对象，一般来说，集合中非常常见，如果对集合类比较熟悉的话，理解本模式会十分轻松。
+这句话包含两层意思：一是需要遍历的对象，即聚集对象，二是迭代器对象，用于对聚集对象进行遍历访问。
 这个思路和我们常用的一模一样，MyCollection中定义了集合的一些操作，MyIterator中定义了一系列迭代操作，且持有Collection实例，我们来看看实现代码：
-
 两个接口：
-
 ```java
 public interface Collection {  
       
@@ -1392,7 +1371,6 @@ public interface Iterator {
 } 
 ```
 两个实现：
-
 ```java
 public class MyCollection implements Collection {  
   
@@ -1456,7 +1434,6 @@ public class MyIterator implements Iterator {
 } 
 ```
 测试类：
-
 ```java
 public class Test {  
   
@@ -1472,13 +1449,14 @@ public class Test {
 ```
 输出：A B C D E
 
-此处我们貌似模拟了一个集合类的过程，感觉是不是很爽？其实JDK中各个类也都是这些基本的东西，加一些设计模式，再加一些优化放到一起的，只要我们把这些东西学会了，掌握好了，我们也可以写出自己的集合类，甚至框架！
+此处我们貌似模拟了一个集合类的过程，感觉是不是很爽？其实JDK中各个类也都是这些基本的东西，
+加一些设计模式，再加一些优化放到一起的，只要我们把这些东西学会了，掌握好了，我们也可以写出自己的集合类，甚至框架！
  
 #### 17、责任链模式（Chain of Responsibility）
-接下来我们将要谈谈责任链模式，有多个对象，每个对象持有对下一个对象的引用，这样就会形成一条链，请求在这条链上传递，直到某一对象决定处理该请求。但是发出者并不清楚到底最终那个对象会处理该请求，所以，责任链模式可以实现，在隐瞒客户端的情况下，对系统进行动态的调整。先看看关系图：
-
+接下来我们将要谈谈责任链模式，有多个对象，每个对象持有对下一个对象的引用，这样就会形成一条链，
+请求在这条链上传递，直到某一对象决定处理该请求。但是发出者并不清楚到底最终那个对象会处理该请求，
+所以，责任链模式可以实现，在隐瞒客户端的情况下，对系统进行动态的调整。
 Abstracthandler类提供了get和set方法，方便MyHandle类设置和修改引用对象，MyHandle类是核心，实例化后生成一系列相互持有的对象，构成一条链。
-
 ```java
 public interface Handler {  
     public void operator();  
@@ -1540,10 +1518,11 @@ h3deal!
 
 #### 18、命令模式（Command）
     
-命令模式很好理解，举个例子，司令员下令让士兵去干件事情，从整个事情的角度来考虑，司令员的作用是，发出口令，口令经过传递，传到了士兵耳朵里，士兵去执行。这个过程好在，三者相互解耦，任何一方都不用去依赖其他人，只需要做好自己的事儿就行，司令员要的是结果，不会去关注到底士兵是怎么实现的。我们看看关系图：
-
-Invoker是调用者（司令员），Receiver是被调用者（士兵），MyCommand是命令，实现了Command接口，持有接收对象，看实现代码：
-
+命令模式很好理解，举个例子，司令员下令让士兵去干件事情，从整个事情的角度来考虑，司令员的作用是，发出口令，
+口令经过传递，传到了士兵耳朵里，士兵去执行。这个过程好在，三者相互解耦，任何一方都不用去依赖其他人，只需要做好自己的事儿就行，
+司令员要的是结果，不会去关注到底士兵是怎么实现的。
+Invoker是调用者（司令员），Receiver是被调用者（士兵），MyCommand是命令，实现了Command接口，持有接收对象，
+看实现代码：
 ```java
 public interface Command {  
     public void exe();  
@@ -1594,18 +1573,19 @@ public class Test {
 ```
 输出：command received!
 
-这个很哈理解，命令模式的目的就是达到命令的发出者和执行者之间解耦，实现请求和执行分开，熟悉Struts的同学应该知道，Struts其实就是一种将请求和呈现分离的技术，其中必然涉及命令模式的思想！
-
-其实每个设计模式都是很重要的一种思想，看上去很熟，其实是因为我们在学到的东西中都有涉及，尽管有时我们并不知道，其实在Java本身的设计之中处处都有体现，像AWT、JDBC、集合类、IO管道或者是Web框架，里面设计模式无处不在。因为我们篇幅有限，很难讲每一个设计模式都讲的很详细，不过我会尽我所能，尽量在有限的空间和篇幅内，把意思写清楚了，更好让大家明白。本章不出意外的话，应该是设计模式最后一讲了，首先还是上一下上篇开头的那个图：
+这个很哈理解，命令模式的目的就是达到命令的发出者和执行者之间解耦，实现请求和执行分开，
+熟悉Struts的同学应该知道，Struts其实就是一种将请求和呈现分离的技术，其中必然涉及命令模式的思想！
+其实每个设计模式都是很重要的一种思想，看上去很熟，其实是因为我们在学到的东西中都有涉及，尽管有时我们并不知道，
+其实在Java本身的设计之中处处都有体现，像AWT、JDBC、集合类、IO管道或者是Web框架，里面设计模式无处不在。
+因为我们篇幅有限，很难讲每一个设计模式都讲的很详细，不过我会尽我所能，尽量在有限的空间和篇幅内，把意思写清楚了，更好让大家明白。
     
 #### 19、备忘录模式（Memento）
     
-主要目的是保存一个对象的某个状态，以便在适当的时候恢复对象，个人觉得叫备份模式更形象些，通俗的讲下：假设有原始类A，A中有各种属性，A可以决定需要备份的属性，备忘录类B是用来存储A的一些内部状态，类C呢，就是一个用来存储备忘录的，且只能存储，不能修改等操作。做个图来分析一下：
-
-
-
-Original类是原始类，里面有需要保存的属性value及创建一个备忘录类，用来保存value值。Memento类是备忘录类，Storage类是存储备忘录的类，持有Memento类的实例，该模式很好理解。直接看源码：
-
+主要目的是保存一个对象的某个状态，以便在适当的时候恢复对象，个人觉得叫备份模式更形象些，
+通俗的讲下：假设有原始类A，A中有各种属性，A可以决定需要备份的属性，备忘录类B是用来存储A的一些内部状态，
+类C呢，就是一个用来存储备忘录的，且只能存储，不能修改等操作。
+Original类是原始类，里面有需要保存的属性value及创建一个备忘录类，用来保存value值。
+Memento类是备忘录类，Storage类是存储备忘录的类，持有Memento类的实例，该模式很好理解。直接看源码：
 ```java
 public class Original {  
       
@@ -1667,7 +1647,6 @@ public class Storage {
 } 
 ```
 测试类：
-
 ```java
 public class Test {  
   
@@ -1700,14 +1679,11 @@ public class Test {
 
 #### 20、状态模式（State）
     
-核心思想就是：当对象的状态改变时，同时改变其行为，很好理解！就拿QQ来说，有几种状态，在线、隐身、忙碌等，每个状态对应不同的操作，而且你的好友也能看到你的状态，所以，状态模式就两点：1、可以通过改变状态来获得不同的行为。2、你的好友能同时看到你的变化。看图：
+核心思想就是：当对象的状态改变时，同时改变其行为，很好理解！就拿QQ来说，有几种状态，在线、隐身、忙碌等，每个状态对应不同的操作，
+而且你的好友也能看到你的状态，所以，状态模式就两点：1、可以通过改变状态来获得不同的行为。2、你的好友能同时看到你的变化。
 
-
-
-State类是个状态类，Context类可以实现切换，我们来看看代码：
-
- 
-
+State类是个状态类，Context类可以实现切换，
+我们来看看代码：
 ```java
 package com.xtfggef.dp.state;  
   
@@ -1771,7 +1747,6 @@ public class Context {
     }  
 } 
 ```
-
 测试类：	
 ```java
 public class Test {  
@@ -1799,9 +1774,14 @@ execute the second opt!
 
 #### 21、访问者模式（Visitor）
     
-访问者模式把数据结构和作用于结构上的操作解耦合，使得操作集合可相对自由地演化。访问者模式适用于数据结构相对稳定算法又易变化的系统。因为访问者模式使得算法操作增加变得容易。若系统数据结构对象易于变化，经常有新的数据对象增加进来，则不适合使用访问者模式。访问者模式的优点是增加操作很容易，因为增加操作意味着增加新的访问者。访问者模式将有关行为集中到一个访问者对象中，其改变不影响系统数据结构。其缺点就是增加新的数据结构很困难。—— From 百科
+访问者模式把数据结构和作用于结构上的操作解耦合，使得操作集合可相对自由地演化。
+访问者模式适用于数据结构相对稳定算法又易变化的系统。因为访问者模式使得算法操作增加变得容易。
+若系统数据结构对象易于变化，经常有新的数据对象增加进来，则不适合使用访问者模式。
+访问者模式的优点是增加操作很容易，因为增加操作意味着增加新的访问者。
+访问者模式将有关行为集中到一个访问者对象中，其改变不影响系统数据结构。
+其缺点就是增加新的数据结构很困难。—— From 百科
 
-简单来说，访问者模式就是一种分离对象数据结构与行为的方法，通过这种分离，可达到为一个被访问者动态添加新的操作而无需做其它的修改的效果。简单关系图：
+简单来说，访问者模式就是一种分离对象数据结构与行为的方法，通过这种分离，可达到为一个被访问者动态添加新的操作而无需做其它的修改的效果。
 
 来看看原码：一个Visitor类，存放要访问的对象，
 ```java
@@ -1850,7 +1830,11 @@ public class Test {
 }  
 ```
 输出：visit the subject：love
-该模式适用场景：如果我们想为一个现有的类增加新功能，不得不考虑几个事情：1、新功能会不会与现有功能出现兼容性问题？2、以后会不会再需要添加？3、如果类不允许修改代码怎么办？面对这些问题，最好的解决方法就是使用访问者模式，访问者模式适用于数据结构相对稳定的系统，把数据结构和算法解耦
+该模式适用场景：如果我们想为一个现有的类增加新功能，不得不考虑几个事情：
+1、新功能会不会与现有功能出现兼容性问题？
+2、以后会不会再需要添加？
+3、如果类不允许修改代码怎么办？
+面对这些问题，最好的解决方法就是使用访问者模式，访问者模式适用于数据结构相对稳定的系统，把数据结构和算法解耦
 
 #### 22、中介者模式（Mediator）
     
@@ -1858,8 +1842,8 @@ public class Test {
 其它关联的对象都得进行修改。如果使用中介者模式，只需关心和Mediator类的关系，具体类类之间的关系及调度交给Mediator就行，这有点像spring容器的作用。
 User类统一接口，User1和User2分别是不同的对象，二者之间有关联，如果不采用中介者模式，则需要二者相互持有引用，
 这样二者的耦合度很高，为了解耦，引入了Mediator类，提供统一接口，MyMediator为其实现类，里面持有User1和User2的实例，用来实现对User1和User2的控制。
-这样User1和User2两个对象相互独立，他们只需要保持好和Mediator之间的关系就行，剩下的全由MyMediator类来维护！基本实现：
-
+这样User1和User2两个对象相互独立，他们只需要保持好和Mediator之间的关系就行，剩下的全由MyMediator类来维护！
+基本实现：
 ```java
 public interface Mediator {  
     public void createMediator();  
@@ -1932,7 +1916,6 @@ public class User2 extends User {
 } 
 ```
 测试类：
-
 ```java
 public class Test {  
   
@@ -1948,8 +1931,10 @@ user1 exe!
 user2 exe!
 	
 #### 23、解释器模式（Interpreter）
+
 解释器模式是我们暂时的最后一讲，一般主要应用在OOP开发中的编译器的开发中，所以适用面比较窄。    
-Context类是一个上下文环境类，Plus和Minus分别是用来计算的实现，代码如下：
+Context类是一个上下文环境类，Plus和Minus分别是用来计算的实现，
+代码如下：
 ```java
 public interface Expression {  
     public int interpret(Context context);  
