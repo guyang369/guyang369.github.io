@@ -1,6 +1,6 @@
 > Never give up the faith. 
 
-Hi, I am Gu Yang, [blog](https://guyang.club)
+Hi, I am Gu Yang, [blog](https://dracarys.com.cn)
 
 ##### My Programming Languages Spectrum
 

@@ -1,7 +1,7 @@
 > 念念不忘，必有回响。
 
 Hi，我是古杨，JAVA开发工程师，
-[博客](https://guyang.club)
+[博客](https://dracarys.com.cn)
 
 ##### 编程语言倾向
 
