@@ -3,7 +3,7 @@ layout: post
 title: "Java 设计模式"
 subtitle: 'Java 开发中的23种设计模式'
 author: "GuYang"
-header-style: text
+header-img: "img/post-bg-2018.jpg"
 tags:    
     - JAVA
     - 设计模式
