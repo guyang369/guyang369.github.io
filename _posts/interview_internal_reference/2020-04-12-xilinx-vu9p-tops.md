@@ -6,8 +6,6 @@ author: "GuYang"
 header-img: "img/post-bg-2018.jpg"
 tags:    
     - 面试题
-    - Java  
-    - 视图
 ---
 
 #### **题目**：请计算XILINX公司VU9P芯片的算力相当于多少TOPS，给出计算过程与公式。

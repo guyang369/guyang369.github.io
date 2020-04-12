@@ -6,7 +6,6 @@ author: "GuYang"
 header-img: "img/post-bg-2018.jpg"
 tags:    
     - 面试题
-    - Java    
 ---
 ## 2019年最新总结，阿里，腾讯，百度，美团，头条等技术面试题目，以及答案，专家出题人分析汇总。持续更新中。
 

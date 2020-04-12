@@ -6,7 +6,6 @@ author: "GuYang"
 header-img: "img/post-bg-2018.jpg"
 tags:    
     - 面试题
-    - Java  
     - 单向链表  
 ---
 ##### **问题**：如何实现一个高效的单向链表逆序输出？ 
