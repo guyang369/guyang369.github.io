@@ -10,7 +10,7 @@ tags:
 
 #### drop,delete与truncate的区别
 
-#### **参考答案**：
+
 
 drop直接删掉表 truncate删除表中数据，再插入时自增长id又从1开始 delete删除表中数据，可以加where字句。
 

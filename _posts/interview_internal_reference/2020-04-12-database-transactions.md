@@ -11,7 +11,7 @@ tags:
 
 #### 数据库事务的四个特性及含义
 
-#### **参考答案**：
+
 
 数据库事务transanction正确执行的四个基本要素。ACID,原子性(Atomicity)、一致性(Correspondence)、隔离性(Isolation)、持久性(Durability)。
 
