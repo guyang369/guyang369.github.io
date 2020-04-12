@@ -167,7 +167,7 @@ fast paxos流程是在选举过程中，某Server首先向所有Server提议自�
 
 5. Follower收到uptodate消息后，又可以重新接受client的请求进行服务了。
 
-<img src="img/zk_sync.png" />
+<img src="/img/zk_sync.png" />
 
 #### 分布式通知和协调
 
