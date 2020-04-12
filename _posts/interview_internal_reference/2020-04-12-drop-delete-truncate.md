@@ -8,7 +8,7 @@ tags:
     - 面试题    
 ---
 
-#### **题目**：drop,delete与truncate的区别
+#### drop,delete与truncate的区别
 
 #### **参考答案**：
 
