@@ -38,7 +38,6 @@ DI 容器相对于我们上节课讲的工厂模式的例子来说，它处理�
 下面是一个典型的 Spring 容器的配置文件。Spring 容器读取这个配置文件，解析出要创建的两个对象：rateLimiter 和 redisCounter，并且得到两者的依赖关系：rateLimiter 依赖 redisCounter。
 
 ```java
-
 public class RateLimiter {
   private RedisCounter redisCounter;
   public RateLimiter(RedisCounter redisCounter) {
@@ -64,7 +63,6 @@ public class RedisCounter {
 配置文件beans.xml：
 
 ```xml
-
 <beans>
    <bean id="rateLimiter" class="com.xzg.RateLimiter">
       <constructor-arg ref="redisCounter"/>
@@ -101,7 +99,6 @@ public class RedisCounter {
 配置文件beans.xml
 
 ```xml
-
 <beans>
    <bean id="rateLimiter" class="com.xzg.RateLimiter">
       <constructor-arg ref="redisCounter"/>
@@ -117,7 +114,6 @@ public class RedisCounter {
 最小原型的使用方式跟 Spring 框架非常类似，示例代码如下所示：
 
 ```java
-
 public class Demo {
   public static void main(String[] args) {
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
@@ -135,7 +131,6 @@ public class Demo {
 通过刚刚的最小原型使用示例代码，我们可以看出，执行入口主要包含两部分：ApplicationContext 和 ClassPathXmlApplicationContext。其中，ApplicationContext 是接口，ClassPathXmlApplicationContext 是接口的实现类。两个类具体实现如下所示：
 
 ```java
-
 public interface ApplicationContext {
   Object getBean(String beanId);
 }
@@ -186,7 +181,6 @@ public class ClassPathXmlApplicationContext implements ApplicationContext {
 配置文件的解析比较繁琐，不涉及我们专栏要讲的理论知识，不是我们讲解的重点，所以这里我只给出两个类的大致设计思路，并未给出具体的实现代码。如果感兴趣的话，你可以自行补充完整。具体的代码框架如下所示：
 
 ```java
-
 public interface BeanConfigParser {
   List<BeanDefinition> parse(InputStream inputStream);
   List<BeanDefinition> parse(String configContent);
@@ -248,7 +242,6 @@ public class BeanDefinition {
 搞清楚了反射的原理，BeansFactory 的代码就不难看懂了。具体代码实现如下所示：
 
 ```java
-
 public class BeansFactory {
   private ConcurrentHashMap<String, Object> singletonObjects = new ConcurrentHashMap<>();
   private ConcurrentHashMap<String, BeanDefinition> beanDefinitions = new ConcurrentHashMap<>();
