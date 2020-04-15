@@ -94,7 +94,7 @@ public class RedisCounter {
 ### 如何实现一个简单的 DI 容器？
 实际上，用 Java 语言来实现一个简单的 DI 容器，核心逻辑只需要包括这样两个部分：配置文件解析、根据配置文件通过“反射”语法来创建对象。
 
- 1. 最小原型设计
+#### 1.最小原型设计
 
 因为我们主要是讲解设计模式，所以，在今天的讲解中，我们只实现一个 DI 容器的最小原型。像 Spring 框架这样的 DI 容器，它支持的配置格式非常灵活和复杂。为了简化代码实现，重点讲解原理，在最小原型中，我们只支持下面配置文件中涉及的配置语法。
 
@@ -128,8 +128,7 @@ public class Demo {
   }
 }
 ```
-
- 2. 提供执行入口
+#### 2.提供执行入口
  
 前面我们讲到，面向对象设计的最后一步是：组装类并提供执行入口。在这里，执行入口就是一组暴露给外部使用的接口和类。
 
@@ -180,7 +179,7 @@ public class ClassPathXmlApplicationContext implements ApplicationContext {
 
 从上面的代码中，我们可以看出，ClassPathXmlApplicationContext 负责组装 BeansFactory 和 BeanConfigParser 两个类，串联执行流程：从 classpath 中加载 XML 格式的配置文件，通过 BeanConfigParser 解析为统一的 BeanDefinition 格式，然后，BeansFactory 根据 BeanDefinition 来创建对象。
 
- 3. 配置文件解析
+#### 3.配置文件解析
 
 配置文件解析主要包含 BeanConfigParser 接口和 XmlBeanConfigParser 实现类，负责将配置文件解析为 BeanDefinition 结构，以便 BeansFactory 根据这个结构来创建对象。
 
@@ -238,7 +237,7 @@ public class BeanDefinition {
 }
 ```
 
- 4. 核心工厂类设计
+#### 4.核心工厂类设计
 
 最后，我们来看，BeansFactory 是如何设计和实现的。这也是我们这个 DI 容器最核心的一个类了。它负责根据从配置文件解析得到的 BeanDefinition 来创建对象。
 
